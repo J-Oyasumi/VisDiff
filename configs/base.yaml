@@ -25,7 +25,7 @@ captioner:
 
 proposer:  # LLM Proposer
   method: LLMProposer  # how to propose hypotheses
-  model: gpt-4  # model used in method
+  model: deepseek-chat  # model used in method
   num_rounds: 3  # number of rounds to propose
   num_samples: 20  # number of samples per group to use
   sampling_method: random  # how to sample
@@ -60,5 +60,5 @@ ranker:  # CLIP Ranker
 
 evaluator:
   method: GPTEvaluator  # how to evaluate hypotheses
-  model: gpt-4  # model used in method
+  model: deepseek-chat  # model used in method
   n_hypotheses: 5  # number of hypotheses to evaluate
