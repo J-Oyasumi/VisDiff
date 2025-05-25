@@ -20,7 +20,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 def get_llm_output(prompt: str, model: str) -> str:
-    if model in ["deepseek-chat"]:
+    if model in ["deepseek-chat", "deepseek-reasoner"]:
         openai.api_key = os.environ["DEEPSEEK_API_KEY"]
     else:
         openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -29,11 +29,12 @@ def get_llm_output(prompt: str, model: str) -> str:
         "gpt-3.5-turbo": "https://api.openai.com/v1",
         "gpt-4": "https://api.openai.com/v1",
         "deepseek-chat": "https://api.deepseek.com/v1",
+        "deepseek-reasoner": "https://api.deepseek.com/v1",
         "vicuna": VICUNA_URL,
     }
     openai.api_base = api_base[model]
 
-    if model in ["gpt-3.5-turbo", "gpt-4", "deepseek-chat"]:
+    if model in ["gpt-3.5-turbo", "gpt-4", "deepseek-chat", "deepseek-reasoner"]:
         messages = [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": prompt},
@@ -49,7 +50,7 @@ def get_llm_output(prompt: str, model: str) -> str:
 
     for _ in range(3):
         try:
-            if model in ["gpt-3.5-turbo", "gpt-4", "deepseek-chat"]:
+            if model in ["gpt-3.5-turbo", "gpt-4", "deepseek-chat", "deepseek-reasoner"]:
                 completion = openai.ChatCompletion.create(
                     model=model,
                     messages=messages,
@@ -114,6 +115,9 @@ def get_differences(captions1: List[str], captions2: List[str], model: str) -> s
 def test_get_llm_output():
     prompt = "hello"
     model = "deepseek-chat"
+    completion = get_llm_output(prompt, model)
+    print(f"{model=}, {completion=}")
+    model = "deepseek-reasoner"
     completion = get_llm_output(prompt, model)
     print(f"{model=}, {completion=}")
     model = "gpt-4"
